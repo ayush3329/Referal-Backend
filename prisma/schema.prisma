@@ -13,9 +13,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model Referral {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  phone     String
+  id                 Int      @id @default(autoincrement())
+
+  referral_name     String
+  referal_email     String
+  referal_phone     String
+  referal_money     Int
+
+  referee_name      String
+  refree_email      String
+  refree_money      Int
+
+  course_name       String
+  course_id         Int
 }

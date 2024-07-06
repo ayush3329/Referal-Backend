@@ -1,5 +1,6 @@
 import express from "express"
 import {PrismaClient} from "@prisma/client"
+import {course} from "./coursedata"
 
 const prisma = new PrismaClient()
 
@@ -13,19 +14,25 @@ app.post('/referral', async (req, res) => {
   const { name, email, phone } = req.body;
 
   try {
-    if (!name || !email || !phone) {
+    if (!referral_name || !referal_email || !referal_phone || referee_name || refree_email || id) {
       return res.status(400).json({ error: 'Missing fields' });
     }
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: 'Invalid email format' });
+
+    if (!emailRegex.test(referal_email)) {
+      return res.status(400).json({ error: 'Invalid referal email format' });
     }
-    if (!phoneRegex.test(phone)) {
-      return res.status(400).json({ error: 'Invalid phone number format' });
+    if(!email.test(refree_email)){
+      return res.status(400).json({ error: 'Invalid refree email format' });
+
     }
+    if (!phoneRegex.test(referal_phone)) {
+      return res.status(400).json({ error: 'Invalid referal phone number format' });
+    }
+    
 
     const already_phone = await prisma.referral.findFirst({
       where: {
-        phone: phone
+        referal_phone: referal_phone
       }
     });
 
@@ -35,7 +42,7 @@ app.post('/referral', async (req, res) => {
 
     const already_email = await prisma.referral.findFirst({
       where: {
-        email: email
+        referal_email: referal_email
       }
     });
 
@@ -45,9 +52,15 @@ app.post('/referral', async (req, res) => {
 
     const referral = await prisma.referral.create({
       data: {
-        name,
-        email,
-        phone,
+        course_id: id,
+        course_name: course[id].name,
+        referal_email,
+        referal_phone,
+        referral_name,
+        referal_money: course[id].referal_bonus,
+        referee_name,
+        refree_email,
+        refree_money: course[id].referee_bonus
       },
     });
     console.log(referral);
