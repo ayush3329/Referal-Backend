@@ -1,6 +1,6 @@
 import express from "express"
 import {PrismaClient} from "@prisma/client"
-import {course} from "./coursedata"
+import {course} from "./coursedata.js"
 
 const prisma = new PrismaClient()
 
@@ -11,17 +11,18 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const phoneRegex = /^\+?(\d{1,3})?[-. (]?(\d{1,4})[-. )]?(\d{1,4})[-. ]?(\d{1,9})$/;
 
 app.post('/referral', async (req, res) => {
-  const { name, email, phone } = req.body;
+  const { referral_name, referal_email, referal_phone, referee_name, refree_email, id } = req.body;
+  console.log(referee_name, " ", refree_email, " ", referal_phone, " ", referee_name, " ", refree_email, " ", id, "\n");
 
   try {
-    if (!referral_name || !referal_email || !referal_phone || referee_name || refree_email || id) {
+    if (!referral_name || !referal_email || !referal_phone || !referee_name || !refree_email || id<0) {
       return res.status(400).json({ error: 'Missing fields' });
     }
 
     if (!emailRegex.test(referal_email)) {
       return res.status(400).json({ error: 'Invalid referal email format' });
     }
-    if(!email.test(refree_email)){
+    if(!emailRegex.test(refree_email)){
       return res.status(400).json({ error: 'Invalid refree email format' });
 
     }
@@ -69,6 +70,7 @@ app.post('/referral', async (req, res) => {
 
     res.status(201).json(referral);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Internal server error' });
   }
 });
