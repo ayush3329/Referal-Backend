@@ -1,0 +1,22 @@
+{
+  "name": "backend-referal",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
+    "@prisma/client": "^5.16.1",
+    "express": "^4.19.2",
+    "googleapis": "^105.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.16.1"
+  }
+}
